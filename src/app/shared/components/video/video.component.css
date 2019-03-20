@@ -1,0 +1,21 @@
+.video {
+	display: grid;
+	grid-template-columns: auto;
+	grid-column-gap: 1em;
+	grid-row-gap: 1em;
+	align-content: center;
+  justify-content: center;
+	cursor: pointer;
+}
+
+.video-meta {
+	font-size: 18px;
+}
+
+.video-thumbnail img {
+	width: 100%;
+}
+
+.large {
+	grid-row-start: 1;
+}

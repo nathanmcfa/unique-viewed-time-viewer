@@ -1,0 +1,11 @@
+<div class="video"
+  *ngIf="video">
+  <div class="video-thumbnail">
+    <img [src]="video.thumbnailUrl">
+  </div>
+  <div class="video-meta" [ngClass]="{'large': large}">
+    <b>{{ video.title }}</b>
+    <span class="separator">•</span>
+    <span class="alt">{{ video.trtMsec / 1000 }}s</span>
+  </div>
+</div>

@@ -1,0 +1,7 @@
+<h2>My Videos</h2>
+
+<div class="videos">
+	<app-video *ngFor="let video of videos"
+		routerLink="/video/{{video.id}}"
+		[video]="video"></app-video>
+</div>

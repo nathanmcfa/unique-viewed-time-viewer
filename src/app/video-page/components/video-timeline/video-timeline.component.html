@@ -1,0 +1,16 @@
+<div class="video-timeline" *ngIf="uvt">
+  <div class="segment"
+    *ngFor="let segment of uvt.segments"
+    [style.left.%]="segment.startMsec / uvt.video.trtMsec * 100"
+    [style.width.%]="(segment.endMsec - segment.startMsec) / uvt.video.trtMsec * 100">
+    <span class="video-timeline-tooltip">
+      <span><b>{{ segment.startMsec / 1000 }}s - {{ segment.endMsec / 1000 }}s</b></span>
+      <span>{{ segment.fragments.length }} {{ (segment.fragments.length === 1) ? 'view' : 'views'}}</span>
+    </span>
+  </div>
+</div>
+<div class="video-uvt" *ngIf="uvt">
+  <span class="alt">Total time watched: {{ uvt.totalMsec / 1000 }}s</span>
+  <span class="separator">•</span>
+  <span class="alt">Number of unique segments: {{ uvt.segments.length }}</span>
+</div>

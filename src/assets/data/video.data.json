@@ -1,0 +1,20 @@
+[
+	{
+		"id": "bf1ec36c-ea65-45b9-9227-9a6cea0896db",
+		"trtMsec": 1000,
+		"title": "Toy Story 4",
+		"thumbnailUrl": "assets/images/thumb1.png"
+	},
+	{
+		"id": "f5044ac6-c6ac-458d-8489-f8afbdaa7b7a",
+		"trtMsec": 3829,
+		"title": "Avengers: Endgame",
+		"thumbnailUrl": "assets/images/thumb2.png"
+	},
+	{
+		"id": "d5044ac6-c6av-458d-8489-f8afbezz7h9b",
+		"trtMsec": 10000,
+		"title": "Aladdin",
+		"thumbnailUrl": "assets/images/thumb3.png"
+	}
+]
