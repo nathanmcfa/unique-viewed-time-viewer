@@ -1,4 +1,4 @@
-import { UniqueViewedTime, UniqueViewedTimeSegment, createUVT } from './unique-viewed-time';
+import { UniqueViewedTime, createUVT } from './unique-viewed-time';
 import vfData from '../../../assets/data/viewed-fragment.data.json';
 import videoData from '../../../assets/data/video.data.json';
 
