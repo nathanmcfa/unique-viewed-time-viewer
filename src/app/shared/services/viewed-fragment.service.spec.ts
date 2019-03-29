@@ -24,7 +24,7 @@ describe('ViewedFragment', () => {
 		it(`should get all viewed fragments`, () => {
 			const fragments = viewedFragmentService.getViewedFragments();
 
-			expect(fragments.length).toBe(12);
+			expect(fragments.length).toBe(17);
 		});
 
 	});

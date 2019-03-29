@@ -28,7 +28,7 @@ export const createUVT = (video: Video, viewedFragments: ViewedFragment[]): Uniq
 function setUVTSegments (viewedFragments: ViewedFragment[]): UniqueViewedTimeSegment[] {
 	let segments: UniqueViewedTimeSegment[] = [];
 
-	let sortedFragments = viewedFragments.sort((a, b) => a.startMsec - b.startMsec);
+	const sortedFragments = viewedFragments.sort((a, b) => a.startMsec - b.startMsec || a.endMsec - b.endMsec);
 
 	sortedFragments.forEach((fragment) => {
 		if (segments.length === 0) {
@@ -41,7 +41,9 @@ function setUVTSegments (viewedFragments: ViewedFragment[]): UniqueViewedTimeSeg
 				startMsec: fragment.startMsec,
 				endMsec: fragment.endMsec,
 				fragments:[fragment]});
-		}	else {
+		}	else if (isDuplicate(fragment, sortedFragments)) {
+			segments = setDuplicate(fragment, segments);
+		} else {
 			segments = setOverlap(fragment, segments);
 		}
 	});
@@ -76,9 +78,42 @@ function setOverlap (viewedFragment: ViewedFragment, segments: UniqueViewedTimeS
 	return segments;
 }
 
+function setDuplicate (fragment: ViewedFragment, segments: UniqueViewedTimeSegment[]): UniqueViewedTimeSegment[] {
+	const filteredSegments = segments.filter((segment) => segment.endMsec === fragment.endMsec && segment.startMsec === fragment.startMsec);
+	if (filteredSegments.length === 0) {
+		segments.push({
+			startMsec: fragment.startMsec,
+			endMsec: fragment.endMsec,
+			fragments:[fragment]});
+
+		return segments;
+	}
+
+	segments.forEach((segment) => {
+		if (segment.endMsec === fragment.endMsec && segment.startMsec === fragment.startMsec && !segment.fragments.includes(fragment)) {
+			segment.fragments.push(fragment);
+		}
+	});
+
+	return segments;
+}
+
+function isDuplicate (viewedFragment: ViewedFragment, fragments: ViewedFragment[]): boolean {
+	const filteredFragments = fragments.filter((fragment) => {
+		if (fragment.startMsec === viewedFragment.startMsec && fragment.endMsec === viewedFragment.endMsec && fragment.id !== viewedFragment.id) {
+			return fragment;
+		}
+	});
+
+	return (filteredFragments.length > 0) ? true : false;
+}
+
 function isUnique (viewedFragment: ViewedFragment, fragments: ViewedFragment[]): boolean {
-	let filteredFragments = fragments.filter((fragment) => {
-		return fragment.startMsec <= viewedFragment.startMsec && fragment.endMsec >= viewedFragment.startMsec && fragment.id !== viewedFragment.id;
+	const filteredFragments = fragments.filter((fragment) => {
+		if (fragment.startMsec <= viewedFragment.startMsec && fragment.endMsec >= viewedFragment.startMsec && fragment.id !== viewedFragment.id) {
+			return fragment;
+		}
+
 	});
 
 	return (filteredFragments.length > 0) ? false : true;
